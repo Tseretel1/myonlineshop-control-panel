@@ -12,28 +12,6 @@
         display: flex;
         justify-content: flex-start;
         gap: 10px;
-        .remove-comp{
-            background-color: #1a1a1a;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            padding: 20px;
-            border-radius: 10px;
-            .btn{
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-                width: 200px;
-            }
-            .hide{
-                background-color: red;
-            }
-            .revert{
-                background-color: green;
-            }
-        }
     }
     .component {
         width: 100%;
@@ -46,6 +24,19 @@
         gap: 20px;
         border-radius: 10px;
         position: relative;
+        .btn{
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .hide{
+            background-color: red;
+        }
+        .revert{
+            background-color: green;
+        }
         .photo-align {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -153,31 +144,45 @@
     .form-align {
         display: flex;
         flex-direction: column;
-        background-color: #0f0f0f;
-        border: 1px solid #2a2a2a;
         padding:10px;
         position: relative;
         gap: 10px; 
         border-radius: 10px;       
+        background-color: #0f0f0f;
+        border: 1px solid black;
         .insert{
             width: 100%;
+            background-color: green;
         }
         .input-group {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
             width: 100%;
-            
             .form-control-group {
                 display: flex;
                 flex-direction: column;
                 gap: 5px;
+                justify-content: flex-end;
+                width: 100%;
+                .edit-group-align{
+                    display: flex;
+                    gap: 10px;
+                    .edit-quantity{
+                        border-radius: 10px;
+                    }
+                    .save-quantity{
+                        background-color: green;
+                    }
+                    .close-quantity{
+                        background-color: red;
+                    }
+                }
                 .form-control-label {
                     font-size: 13px;
                     font-weight: 600;
                     color: whtie;
                     text-transform: uppercase;
-                    letter-spacing: 0.5px;
                     text-wrap: nowrap;
                 }
                 
@@ -203,8 +208,7 @@
                 .order-allowed-align {
                     background-color: #1a4d2e;
                     border-color: #2d5f3f;
-                    color: #4ade80;
-                    
+                    color: white;
                     &:hover {
                         background-color: #22603a;
                         border-color: #3a7550;
@@ -214,14 +218,16 @@
                 .order-not-allowed {
                     background-color: #4d1a1a;
                     border-color: #5f2d2d;
-                    color: #f87171;
+                    color: white;
                     
                     &:hover {
                         background-color: #602222;
                         border-color: #753737;
                     }
                 }
-                
+                .order-alowed{
+
+                }
                 .form-control {
                     background-color: #0a0a0a;
                     border: 1px solid #2a2a2a;
@@ -335,8 +341,7 @@
         }
         
         button {
-            width: 180px;
-            height: 48px;
+            padding: 10px 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -394,6 +399,8 @@
     }
 }
 
+
+
 @media screen and (max-width: 1500px) {
     .center-component {
         .component {
@@ -406,23 +413,43 @@
         }
     }
 }
-
+.main-body{
+    width: 90%;
+    display: flex ; 
+    gap:20px;
+}
 @media screen and (max-width: 1000px) {
     .center-component {
         .component {
             .photo-align {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(4, 1fr);
                 gap: 12px;
             }
             
             .form-align {
                 padding: 24px 20px;
                 gap: 24px;
-                
-                .input-group {
-                    grid-template-columns: 1fr;
-                    gap: 20px;
-                }
+            }
+        }
+    }
+    .main-body{
+        flex-direction: column;
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+    .center-component {
+        .component {
+            gap: 10px;
+            .photo-align {
+                gap: 12px;
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .form-align {
+                padding: 24px 20px;
+                gap: 24px;
             }
         }
     }
@@ -431,11 +458,9 @@
 @media screen and (max-width: 600px) {
     .center-component {
         .component {
-            padding: 60px 16px;
-            
             .photo-align {
                 gap: 10px;
-                
+                grid-template-columns: repeat(2,1fr);
                 .ng-container,
                 .square-container {
                     aspect-ratio: 1;
@@ -448,9 +473,6 @@
                 
                 .discount-top {
                     font-size: 13px;
-                }
-                button {
-                    width: 100%;
                 }
             }
         }

@@ -13,8 +13,8 @@ import { DashboardStatsByYear } from '../../pages/dashboard/dashboard.component'
 })
 export class PostService {
 
-   //private apiUrl = 'https://localhost:7173/';
- private apiUrl = 'https://192.168.1.15:7174/';
+   private apiUrl = 'https://localhost:7173/';
+ //private apiUrl = 'https://192.168.1.15:7174/';
   constructor(private http:HttpClient)
   {
 
@@ -121,6 +121,9 @@ export class PostService {
   }
   UpdateProductOrderAllowed(productid:number, allowed:boolean): Observable<any> {
     return this.http.put<any>(this.apiUrl+`ControlPanel/update-product-order-allowed?productID=${productid}&allowed=${allowed}`,{});
+  }
+  UpdateQuantity(productid:number, quantity:number): Observable<any> {
+    return this.http.put<any>(this.apiUrl+`ControlPanel/update-quantity?productId=${productid}&quantity=${quantity}`,{});
   }
   getShopStats(): Observable<any> {
     return this.http.get<any>(this.apiUrl+`ControlPanel/get-shop-stats`);

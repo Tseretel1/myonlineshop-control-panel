@@ -109,19 +109,21 @@ export class EditPostComponent {
     return forkJoin(uploads);
   }
 
-uploadImages(){
+uploadImages() {
   const newFilesExist = this.uploadPhotos.some(p => p.file);
-  if (newFilesExist) {
-    this.InsertPhotos = [];
-    this.uploadAllImages().subscribe({
-      next: () => {
-       this.submitPost();
-      },
-      error: (err) => {
-        console.error('Upload failed:', err);
-      }
-    });
-  } 
+  if (!newFilesExist) {
+    return;
+  }
+  this.InsertPhotos = [];
+
+  this.uploadAllImages().subscribe({
+    next: () => {
+      this.submitPost(this.InsertPhotos);
+    },
+    error: (err) => {
+      console.error('Upload failed:', err);
+    }
+  });
 }
  photosChanged():boolean{
   return this.uploadPhotos.some(p => p.file);
@@ -148,15 +150,9 @@ sendApplicationtoBackend() {
     });
     return;
   }
-  this.submitPost();
+  this.submitPost(null);
 }
-private submitPost() {
-  const photosToSend = this.InsertPhotos.length
-    ? this.InsertPhotos
-    : this.uploadPhotosTobackend
-        .filter(p => p.preview) 
-        .map(p => ({ photoUrl: p.preview as string }));
-
+private submitPost(photos:Insertphoto[]|null) {
   const InsertPost: InsertPost = {
     Id: this.postId,
     title: this.title,
@@ -164,8 +160,7 @@ private submitPost() {
     price: this.price,
     discountedPrice: this.discountedPrice,
     description: this.description,
-    quantity: this.quantity,
-    photos: photosToSend,
+    photos:photos,
   };
 
   this.postService.EditPost(InsertPost).subscribe(
@@ -180,6 +175,7 @@ private submitPost() {
           color: '#ffffff',
           title:'პროდუქტი წარმატებით რედაქტირდა',
         });
+        this.uploadPhotos=[];
       }
     },
     (error) => {
@@ -267,12 +263,49 @@ private submitPost() {
   }
   orderAllowedToggle(allowed:boolean){
     this.posts.orderNotAllowed = allowed;
-    if(allowed){
-      this.postService.UpdateProductOrderAllowed(this.posts.id,allowed).subscribe()
+      this.postService.UpdateProductOrderAllowed(this.posts.id,allowed).subscribe(
+        (resp)=>{
+          console.log(resp);
+        })
+  }
+
+
+  editQuantityVisible:boolean = false;
+  editQuantity(){
+    this.editQuantityVisible = true;
+  }
+
+  saveQuantity(){
+    if(this.quantity>=0){
+      this.postService.UpdateQuantity(this.postId, this.quantity).subscribe(
+        (resp)=>{
+          Swal.fire({
+            icon: 'success',
+            timer: 3000,
+            showConfirmButton: false,
+            confirmButtonColor: 'green',
+            background:'rgb(25, 26, 25)',
+            color: '#ffffff',
+            title:'მარაგი წარმატებით განახლდა!',
+          });
+          this.closeQuantityEdit();
+        }
+      )
     }
     else{
-      this.postService.UpdateProductOrderAllowed(this.posts.id,allowed).subscribe()
+        Swal.fire({
+          icon: 'error',
+          timer: 3000,
+          showConfirmButton: false,
+          confirmButtonColor: 'green',
+          background:'rgb(25, 26, 25)',
+          color: '#ffffff',
+          title:'მარაგი არ შეიძლბა იყოს 0-ზე ცოტა!',
+        });
     }
+  }
+  closeQuantityEdit(){
+    this.editQuantityVisible = false;
   }
 }
 
@@ -283,8 +316,7 @@ export interface InsertPost {
   description: string;
   price: number;
   discountedPrice: number;
-  quantity: number;
-  photos: Insertphoto[];
+  photos: Insertphoto[]|null;
 }
 export interface Insertphoto {
   photoUrl: string;

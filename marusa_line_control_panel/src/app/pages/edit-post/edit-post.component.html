@@ -1,32 +1,6 @@
 <div class="center-component">
-    <div class="remove-revert-align">
-        <div class="remove-comp">
-            <b>პოსტის ხილვადობა </b>
-           <button class="revert btn" *ngIf="posts.dateDeleted==null" (click)="removePost()"><i class="fas fa-eye"></i> აღდგენილი</button>
-           <button class="hide btn" *ngIf="posts.dateDeleted" (click)="revertPost()"><i class="fas fa-eye-slash"></i> დამალული</button>
-        </div>
-        <div class="form-align" >
-            <b>მარაგი</b>
-            <div class="input-group" style="grid-template-columns: repeat(1,1fr);">
-                <div class="form-control-group">
-                    <input type="number" class="form-control" [(ngModel)]="quantity">
-                </div>
-            </div>
-        </div>
-           <div class="form-align" >
-            <b>შეკვეთა მარაგის <br> ამოწურვის შემდეგ</b>
-            <div class="input-group" style="grid-template-columns: repeat(1,1fr);">
-                <div class="form-control-group">
-                    <button *ngIf="posts.orderNotAllowed" (click)="orderAllowedToggle(true)">✅️</button>
-                    <button *ngIf="!posts.orderNotAllowed" (click)="orderAllowedToggle(false)">❌</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div style="width: 90%; display: flex ; gap:20px;">
+    <div class="main-body">
         <div class="component">
-            <b style="color: white;">ფოტოები</b>
             <div class="photo-align" > 
                 <div *ngFor="let p of uploadPhotos; let i = index" class="ng-container" data-aos="fade-in">
                     <button class="remove-photo"  (click)="removePhoto(p.id)">
@@ -44,12 +18,16 @@
             </div>
         </div>
         <div class="component">
-            <b style="color: white;">პოსტის დეტალები</b>
+            <div style="display: flex; align-items: flex-start;gap:10px; width: 100%; justify-content: flex-end;">
+                    <b>საიტზე ჩვენება </b>
+                <button class="revert btn" style="width: 50px;" *ngIf="posts.dateDeleted==null" (click)="removePost()"><i class="fas fa-eye"></i> </button>
+                <button class="hide btn"style="width: 50px;"  *ngIf="posts.dateDeleted" (click)="revertPost()"><i class="fas fa-eye-slash"></i> </button>
+                </div>
             <div class="form-align">
                 <div class="input-group">
                     <div class="form-control-group">
-                        <label class="form-control-label">დასახელება</label>
-                        <input type="text" class="form-control" maxlength="50" placeholder="მაგ: ჭადრაკი" [(ngModel)]="title">
+                        <label class="form-control-label">პროდუქტის სახელი</label>
+                        <input type="text" class="form-control" maxlength="50"  [(ngModel)]="title">
                     </div>
                     <div class="form-control-group">
                         <label class="form-control-label">კატეგორია</label>
@@ -78,11 +56,32 @@
                     <textarea name="" id="" class="description" [(ngModel)]="description"></textarea>
                 </div>
                 <button class="insert" (click)="sendApplicationtoBackend()">
-                    რედაქტირება 
+                    შენახვა 
                 </button>
             </div>
+                    <div class="form-align">
+            <b>მარაგი</b>
+            <div class="input-group">
+                <div class="form-control-group" style="display: flex; flex-direction: row; align-items: flex-start; justify-content: flex-start;">
+                    <input style="width: 100px;" [disabled]="!editQuantityVisible" type="number" class="form-control" [(ngModel)]="quantity">
+                    <div class="edit-group-align">
+                        <button *ngIf="!editQuantityVisible" class="edit-quantity" (click)="editQuantity()"><i class="fas fa-edit"></i></button>
+                        <button *ngIf="editQuantityVisible" class="edit-quantity close-quantity"  (click)="closeQuantityEdit()"><i class="fas fa-close"></i></button>
+                        <button *ngIf="editQuantityVisible" class="edit-quantity save-quantity"  (click)="saveQuantity()"><i class="fas fa-check"></i></button>
+                    </div>
+                </div>
+            </div>
+            <b>შეკვეთა მარაგის ამოწურვის შემდეგ</b>
+            <div class="input-group" style="width: 300px; grid-template-columns: repeat(1,1fr);">
+                <div class="form-control-group">
+                    <button [ngClass]="{'order-allowed-align':posts.orderNotAllowed}" *ngIf="posts.orderNotAllowed" (click)="orderAllowedToggle(false)">დაშვებული ✅️</button>
+                    <button [ngClass]="{'order-not-allowed':!posts.orderNotAllowed}" *ngIf="!posts.orderNotAllowed" (click)="orderAllowedToggle(true)">დაუშვებელი ❌</button>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
+
 </div> 
 
 

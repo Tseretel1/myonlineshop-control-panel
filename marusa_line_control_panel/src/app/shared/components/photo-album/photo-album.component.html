@@ -10,8 +10,8 @@
         <b [ngClass]="{'discounted-price': posts.discountedPrice>0}">{{posts.price}}₾</b>
         <b *ngIf="posts.discountedPrice>0">{{posts.discountedPrice}}₾</b>
     </div>
-    <div class=" quantity-align" >
-        <b >მარაგში: {{posts.quantity}}</b>
+    <div class=" quantity-align" [ngClass]="{'low-quantity-back':posts.quantity<=0}">
+        <b style="display: flex; gap: 5px;">მარაგში <p class="quantit" [ngClass]="{'low-quantity':posts.quantity<=0}">{{posts.quantity}}</p></b>
     </div>
     <img *ngIf="posts.photoUrl==null"  [src]="posts.photos[0]?.photoUrl" alt="" class="photo">
     <img *ngIf="posts.photoUrl" [src]="posts.photoUrl" alt="" class="photo">
