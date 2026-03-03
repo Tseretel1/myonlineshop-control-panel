@@ -23,7 +23,6 @@ export class OrdersComponent implements OnInit{
     if(userId){
       this.getOrderDto.UserId =Number(userId);
       this.getOrderDto.IsPaid = null;
-      console.log(userId)
       this.UserIdOrderSearch();
       this.getOrderStatuses();
       this.generateMonthsList();
@@ -162,6 +161,8 @@ groupOrdersByMonth() {
   getPaidOrUnpaidOrders(IsPaid:boolean){
     this.getOrderDto.OrderId = null;
     this.getOrderDto.UserId = null
+    this.pageNumber =1;
+    this.selectedPage =1;  
     if(IsPaid){
       this.selectedFilter = 1;
       localStorage.setItem('orderIdPaid', 'true');

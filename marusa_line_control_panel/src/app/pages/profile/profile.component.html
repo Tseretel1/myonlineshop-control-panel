@@ -14,28 +14,28 @@
           <input id="photoinput" type="file" (change)="onFileChange($event)" accept="image/*" hidden>
         </div>
         <div style="display: flex; gap: 10px; padding: 0px 0px 20px 0px; width: 100%; justify-content: center;" *ngIf="!savePhotoVisible">
-            <p style="color:white;font-size: 16px;">  <b style="color: white;  font-size: 20px;">{{shopStats.productCount}}</b> posts</p>
+          <p style="color:white;font-size: 16px;">  <b style="color: white;  font-size: 20px;">{{shopStats.productCount}}</b> posts</p>
             <p style="color: white; font-size: 16px;">  <b style="color: white;  font-size: 20px;">{{shopStats.followerCount}}</b> followers</p>
         </div>
         <div style="display: flex; gap: 10px; justify-content: center;" *ngIf="savePhotoVisible">
             <button class="btn-save" (click)="uploadPhotoToServer()">შენახვა</button>
             <button class="btn-cancel" (click)="hideSavePhoto()">გაუქმება</button>
+          </div>
         </div>
-      </div>
+        <div class="form-group" style="width: 100%;">
+           <button class="btn-save btn-subs" [ngClass]="{'premium': shop.subscription =='პრემიუმი'}" [routerLink]="AppRoutes.subscriptionPlans" *ngIf="shop.subscription!=''">
+            პაკეტი - {{shop.subscription}}
+              <i class="fas fa-crown" style="color: yellow; text-shadow: 0px 0px 1px black;" *ngIf="shop.subscription=='პრემიუმი'"> </i>
+           </button>
+          <button class="btn-save btn-no-sub" [routerLink]="AppRoutes.subscriptionPlans" *ngIf="shop.subscription==''">
+            პაკეტი
+              <i class="fas fa-close" style="color: red;" *ngIf="!shop.subscription"></i> 
+           </button>
+       </div>
 
       <div class="profile-content">
-        <div class="form-group">
-             <button class="btn-save " [ngClass]="{'premium': shop.subscription =='პრემიუმი'}" [routerLink]="AppRoutes.subscriptionPlans" *ngIf="shop.subscription!=''">
-               {{shop.subscription}}
-                <i class="fas fa-crown" style="color: yellow; text-shadow: 0px 0px 1px black;" *ngIf="shop.subscription=='პრემიუმი'"> </i>
-             </button>
-            <button class="btn-save btn-no-sub" [routerLink]="AppRoutes.subscriptionPlans" *ngIf="shop.subscription==''">
-              პაკეტი
-                <i class="fas fa-close" style="color: red;" *ngIf="!shop.subscription"></i> 
-             </button>
-         </div>
         <div class="form-group" style="display: flex;align-items: flex-start; flex-wrap: wrap;">
-            <label for="shop-name">მაღაზიის ლინკი</label>
+            <label for="shop-name" style="text-wrap: nowrap;">მაღაზიის ლინკი</label>
             <a class="shop-link" [href]="'http://localhost:4200/shop/' + shopId" target="_blank">http://localhost:4200/shop/{{shopId}}</a>
         </div>
         <div class="form-group" style="display: flex; flex-direction: column; align-items: flex-start;">

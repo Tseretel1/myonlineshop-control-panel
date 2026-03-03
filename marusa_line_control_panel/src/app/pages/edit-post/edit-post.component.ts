@@ -75,6 +75,7 @@ export class EditPostComponent {
         photos:null,
       };
       this.quantity = this.posts.quantity;
+      this.quantityRollback=resp.quantity;
       if (this.posts.discountedPrice != null &&this.posts.discountedPrice > 0) {
         this.discountAmountChangeDetection();
       }
@@ -86,6 +87,7 @@ export class EditPostComponent {
     discountedPrice!: number;
     description: string = '';
     quantity!: number;
+    quantityRollback: number=0;
     photos: GetPhoto[] = [];
 
 
@@ -203,7 +205,7 @@ private submitPost(photos:Insertphoto[]|null) {
     }
   );
 }
-changeNum:number = 0;
+  changeNum:number = 0;
 
   triggerFileInput(): void {
     const fileInput = document.getElementById(
@@ -318,7 +320,7 @@ changeNum:number = 0;
             color: '#ffffff',
             title:'მარაგი წარმატებით განახლდა!',
           });
-          this.closeQuantityEdit();
+          this.closeQuantity();
         }
       )
     }
@@ -336,8 +338,11 @@ changeNum:number = 0;
   }
   closeQuantityEdit(){
     this.editQuantityVisible = false;
+    this.quantity = this.quantityRollback;
   }
-
+  closeQuantity(){
+    this.editQuantityVisible = false;
+  }
   editProductVisible:boolean = false;
   rollbackProduct(){
       this.title = this.oldPost.title;
