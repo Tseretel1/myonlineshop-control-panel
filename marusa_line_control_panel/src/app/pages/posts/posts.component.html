@@ -1,6 +1,19 @@
 
 <div class="gallery-align">
-    <div class="filters-align" >
+    <div  class="filters-back">
+        <div style="width: 100%; display: flex; justify-content: center;">
+        </div>
+        <div class="filters-align" style="width: 100%;">
+            <div class="filters active-filter" style="color: white;" (click)="toggleTypemnagement(true)">კატეგორიები <i class="fas fa-edit"></i></div>
+        </div>
+        <div class="filters-align" style="width: 100%; margin-top: 10px;">
+             <div class="filters" [ngClass]="{'active-filter': activeFilterNum == 0}" (click)="GetByCategorie(null)"   [attr.data-id]="0">ყველა</div>
+            <div class="filters" [ngClass]="{'active-filter': activeFilterNum == i.id}"  *ngFor="let i of productTypesList" (click)="GetByCategorie(i.id)" >
+                {{i.productType}}
+            </div>
+        </div> 
+    </div>
+    <div class="filters-align" style="margin-top: 20px;">
         <div class="post-filter" (click)="getActivePosts()" [ngClass]="{'active-post': !getPostsDto.IsDeleted}">
              აქტიური
              <b>{{posts[0]?.totalActiveProducts}}</b>
@@ -9,20 +22,6 @@
              დამალული
              <b >{{posts[0]?.totalDeletedProducts}}</b>
          </div>
-     </div>
-     <div  class="filters-back">
-        <div style="width: 100%; display: flex; justify-content: center;">
-            <p style="color: white;">კატეგორიები</p>
-        </div>
-        <div class="filters-align" style="width: 100%;">
-            <div class="filters edit-filter" [attr.data-id]="0" (click)="toggleTypemnagement(true)">რედაქტირება <i class="fas fa-edit"></i></div>
-        </div>
-        <div class="filters-align" style="width: 100%;">
-             <div class="filters" [ngClass]="{'active-filter': activeFilterNum == 0}" (click)="GetByCategorie(null)"   [attr.data-id]="0">ყველა</div>
-            <div class="filters" [ngClass]="{'active-filter': activeFilterNum == i.id}"  *ngFor="let i of productTypesList" (click)="GetByCategorie(i.id)" >
-                {{i.productType}}
-            </div>
-        </div> 
      </div>
     <div class="photo-align">
         <div *ngIf="!getPostsDto.IsDeleted && getPostsDto.PageNumber==1" class="add-new-post" [routerLink]="AppRoutes.addPosts" >

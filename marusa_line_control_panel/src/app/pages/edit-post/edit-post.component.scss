@@ -5,8 +5,29 @@
     justify-content: center;
     align-items: center;
     color: #e8e8e8;
-    padding: 40px 0;
-    gap: 20px;
+    gap: 10px;
+    .show-on-web{
+        display: flex; 
+        align-items: flex-start;
+        gap:10px; width: 90%;
+        background-color: #1a1a1a;
+        border: 1px solid #2a2a2a;
+        padding: 10px 20px;
+        border-radius: 10px;
+        .btn{
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .hide{
+            background-color: red;
+        }
+        .revert{
+            background-color: green;
+        }
+    }
     .remove-revert-align{
         width: 90%;
         display: flex;
@@ -24,18 +45,26 @@
         gap: 20px;
         border-radius: 10px;
         position: relative;
-        .btn{
-            color: white;
-            border: none;
-            padding: 5px 10px;
+        .edit-product{
             border-radius: 5px;
+            border: none;
+            padding: 5px;
             cursor: pointer;
         }
-        .hide{
-            background-color: red;
-        }
-        .revert{
-            background-color: green;
+        .upload-photos-align{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            .save-photos-button{
+                width: 250px;
+                padding: 5px 20px;
+                background-color: green;
+                border: none;
+                border-radius: 5px;
+                color: white;
+                cursor: pointer;
+                font-weight: bolder;
+            }
         }
         .photo-align {
             display: grid;
@@ -45,22 +74,6 @@
             height: fit-content;
             padding: 0px 0px 30px 0px;
             position: relative;
-            .upload-photos-align{
-                position:absolute;
-                bottom: -20px;
-                left: 50%;
-                transform: translateX(-50%);
-                .save-photos-button{
-                    width: 250px;
-                    padding: 5px 20px;
-                    background-color: green;
-                    border: none;
-                    border-radius: 5px;
-                    color: white;
-                    cursor: pointer;
-                    font-weight: bolder;
-                }
-            }
             .square-container {
                 width: 100%;
                 aspect-ratio: 1;
@@ -153,6 +166,10 @@
         .insert{
             width: 100%;
             background-color: green;
+            border-radius: 5px;
+        }
+        .remove{
+            background-color: red;
         }
         .input-group {
             display: flex;
@@ -189,16 +206,14 @@
                 .order-allowed-align {
                     display: flex;
                     justify-content: center;
-                    gap: 10px;
                     height: 100%;
                     align-items: center;
-                    padding: 12px 16px;
                     cursor: pointer;
                     border: 1px solid;
                     font-size: 14px;
                     font-weight: 600;
                     transition: all 0.2s ease;
-                    
+                    border-radius: 5px;
                     label {
                         cursor: pointer;
                         margin: 0;
@@ -225,18 +240,16 @@
                         border-color: #753737;
                     }
                 }
-                .order-alowed{
-
-                }
                 .form-control {
                     background-color: #0a0a0a;
-                    border: 1px solid #2a2a2a;
+                    border: 1px dotted grey;
                     outline: none;
                     padding:5px;
                     color: #e8e8e8;
                     transition: all 0.2s ease;
                     font-family: inherit;
                     padding: 10px;
+                    border-radius: 5px;
                     &::placeholder {
                         color: #555;
                         font-size: 15px;
@@ -312,19 +325,18 @@
             .description {
                 width: 100%;
                 height: auto;
-                min-height: 100px;
-                max-height: 300px;
+                min-height: 150px;
                 resize: vertical;
                 padding: 12px 16px;
                 outline: none;
-                border: 1px solid #2a2a2a;
+                border: 1px dotted grey;
                 background-color: #0a0a0a;
                 color: #e8e8e8;
                 font-size: 15px;
                 line-height: 1.6;
                 transition: all 0.2s ease;
                 font-family: inherit;
-                
+                border-radius: 5px;
                 &::placeholder {
                     color: #555;
                 }

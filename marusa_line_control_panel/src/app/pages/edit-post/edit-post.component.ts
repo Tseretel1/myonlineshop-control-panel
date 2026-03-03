@@ -48,8 +48,10 @@ export class EditPostComponent {
     this.getPost();
   }
 
+  oldPost!:InsertPost;
 
   getPost() {
+    this.oldPost as {};
     this.postService.getPostWithId(this.postId).subscribe((resp) => {
       this.posts = resp;
       this.title = this.posts.title;
@@ -63,20 +65,28 @@ export class EditPostComponent {
         preview: item.photoUrl ?? null, 
         file: null
       }));
-      console.log(this.posts)
+      this.oldPost = {
+        Id: resp.postId,
+        title: resp.title,
+        productTypeId: resp.productTypeId,
+        price: resp.price,
+        discountedPrice: resp.discountedPrice,
+        description: resp.description,
+        photos:null,
+      };
       this.quantity = this.posts.quantity;
       if (this.posts.discountedPrice != null &&this.posts.discountedPrice > 0) {
         this.discountAmountChangeDetection();
       }
     });
   }
-  title: string = '';
-  productTypeId: number = 0;
-  price!: number;
-  discountedPrice!: number;
-  description: string = '';
-  quantity!: number;
-  photos: GetPhoto[] = [];
+    title: string = '';
+    productTypeId: number |null= 0;
+    price!: number;
+    discountedPrice!: number;
+    description: string = '';
+    quantity!: number;
+    photos: GetPhoto[] = [];
 
 
 
@@ -175,7 +185,17 @@ private submitPost(photos:Insertphoto[]|null) {
           color: '#ffffff',
           title:'პროდუქტი წარმატებით რედაქტირდა',
         });
-        this.uploadPhotos=[];
+        this.changeNum = 0;
+        this.hideEditProduct();
+        this.oldPost = {
+            Id: this.postId,
+            title: this.title,
+            productTypeId: this.productTypeId,
+            price: this.price,
+            discountedPrice: this.discountedPrice,
+            description: this.description,
+            photos:null,
+        };
       }
     },
     (error) => {
@@ -183,8 +203,7 @@ private submitPost(photos:Insertphoto[]|null) {
     }
   );
 }
-
-
+changeNum:number = 0;
 
   triggerFileInput(): void {
     const fileInput = document.getElementById(
@@ -209,6 +228,7 @@ private submitPost(photos:Insertphoto[]|null) {
       newPhoto.preview = reader.result;
       this.uploadPhotos.push(newPhoto);
       this.uploadPhotosTobackend.push(newPhoto);
+      this.changeNum ++; 
     };
     reader.readAsDataURL(file);
    }
@@ -236,8 +256,11 @@ private submitPost(photos:Insertphoto[]|null) {
       if (results.isConfirmed) {
           this.uploadPhotos = this.uploadPhotos.filter(p => p.id !== id);
           this.uploadPhotosTobackend = this.uploadPhotosTobackend.filter(p => p.id !== id);
+          if(this.changeNum>0){
+            this.changeNum--;
+          }     
           this.postService.deletePhoto(id).subscribe((resp)=>{
-          })        
+          })   
       }
     });
   }
@@ -261,12 +284,19 @@ private submitPost(photos:Insertphoto[]|null) {
       }
     )
   }
-  orderAllowedToggle(allowed:boolean){
+  orderAllowedToggle(){
+    var allowed = false;
+    if(this.posts.orderNotAllowed){
+      allowed = false;
+    }
+    else{
+      allowed = true;
+    }
     this.posts.orderNotAllowed = allowed;
       this.postService.UpdateProductOrderAllowed(this.posts.id,allowed).subscribe(
         (resp)=>{
           console.log(resp);
-        })
+    })
   }
 
 
@@ -307,6 +337,24 @@ private submitPost(photos:Insertphoto[]|null) {
   closeQuantityEdit(){
     this.editQuantityVisible = false;
   }
+
+  editProductVisible:boolean = false;
+  rollbackProduct(){
+      this.title = this.oldPost.title;
+      this.description = this.oldPost.description;
+      this.productTypeId = this.oldPost.productTypeId;
+      this.price = this.oldPost.price;
+      this.discountedPrice = this.oldPost.discountedPrice;
+    
+    this.editProductVisible = false;
+  }
+  hideEditProduct(){
+    this.editProductVisible = false;
+  }
+  editProduct(){
+    this.editProductVisible = true;
+  }
+
 }
 
 export interface InsertPost {
