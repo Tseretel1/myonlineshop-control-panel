@@ -1,14 +1,6 @@
  <div class="profile-container">
      <div class="profile-header">
-        <div style="display: flex; width: 100%; justify-content: space-between; align-items: center;">
-            <button class="btn-save btn-subs" [ngClass]="{'premium': shop.subscription =='პრემიუმი', 'standard': shop.subscription =='სტანდარტული'}" [routerLink]="AppRoutes.subscriptionPlans" *ngIf="shop.subscription!=''">
-              პაკეტი - {{shop.subscription}}
-              <i class="fas fa-crown" style="color: yellow; text-shadow: 0px 0px 1px black;" *ngIf="shop.subscription=='პრემიუმი'"> </i>
-            </button>
-            <button class="btn-save btn-no-sub" [routerLink]="AppRoutes.subscriptionPlans" *ngIf="shop.subscription==''">
-              პაკეტი
-              <i class="fas fa-close" style="color: red;" *ngIf="!shop.subscription"></i>
-            </button>
+        <div style="display: flex; width: 100%; justify-content: flex-end; align-items: center;">
             <button class="social-label instagram" (click)="logout()"><i class="fas fa-sign-out-alt"></i> გამოსვლა</button>
         </div>
         <div class="profile-picture-wrapper">
@@ -32,7 +24,16 @@
         </div>
         
         <div class="profile-content">
-        <div class="form-group" style="width: 100%;">
+        <div class="form-group" style="width: 100%; display: flex; align-items: center; gap: 16px;">
+           <button class="btn-save btn-subs" [ngClass]="{'premium': shop.subscription =='პრემიუმი', 'standard': shop.subscription =='სტანდარტული'}" [routerLink]="AppRoutes.subscriptionPlans" *ngIf="shop.subscription!=''">
+             პაკეტი - {{shop.subscription}}
+             <i class="fas fa-crown" style="color: yellow; text-shadow: 0px 0px 1px black;" *ngIf="shop.subscription=='პრემიუმი'"> </i>
+           </button>
+           <button class="btn-save btn-no-sub" [routerLink]="AppRoutes.subscriptionPlans" *ngIf="shop.subscription==''">
+             პაკეტი
+             <i class="fas fa-close" style="color: red;" *ngIf="!shop.subscription"></i>
+           </button>
+
            <button class="btn-save btn-subs btn-payments" [routerLink]="AppRoutes.payments">
              <i class="fas fa-credit-card"></i>
              ჩემი გადახდები
